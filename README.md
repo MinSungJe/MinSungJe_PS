@@ -1,5 +1,5 @@
 # MinSungJeAlgorithm
->- Solving the algorithms of **MinSungJestyle**
+>- Solving the algorithms of **MinSungJeStyle**
 >- This is a auto push repository for Baekjoon Online Judge created with [BaekjoonHub](https://github.com/BaekjoonHub/BaekjoonHub).
 ---
 ## MinSungJe
@@ -10,3 +10,4 @@
 > **2023-10-10**
 >- 🏆 현재 solved.ac Tier : Gold IV 971
 >- 백준허브 시작
+>- 180문제 (정답 : 179, 부분정답 : 1) 동기화 완료
