@@ -1,33 +1,26 @@
-# 모듈 불러오기
-from collections import deque
-
 # 입력부
 n = int(input())
 
-# 초기값 선언
-visited = [False for _ in range(n+1)]
-queue = deque()
-queue.append((0,0))
+# 제곱수인지 확인하는 함수
+def isDouble(N):
+    if N**(1/2) % 1 == 0: return True
+    else: return False
 
-# BFS
-while queue:
-    value, count = queue.popleft()
+# 결과 계산하는 함수
+def sol(N):
+    if isDouble(N): return 1
 
-    # 탐색 완료
-    if value == n:
-        print(count)
-        break
+    for i in range(1,224):
+        Num = N - (i*i)
+        if Num < 0: break
+        if isDouble(Num): return 2
 
-    for i in range(1, 224): # N 조건 상 최댓값은 223
-        next = value + (i*i)
+    for i in range(1,224):
+        for j in range(1,224):
+            Num = N - (i*i) - (j*j)
+            if Num < 0: break
+            if isDouble(Num): return 3
+    return 4
 
-        # 탐색 불가 조건 : 다음 위치가 목표를 넘어섬
-        if next > n: break
-        # 탐색 불가 조건 : 이미 적은 횟수로 도달한 적 있는 숫자임
-        if visited[next]: continue
-
-        # 방문 처리
-        visited[next] = True
-
-        # 다음 탐색
-        queue.append((next, count+1))
+# 출력부
+print(sol(n))
