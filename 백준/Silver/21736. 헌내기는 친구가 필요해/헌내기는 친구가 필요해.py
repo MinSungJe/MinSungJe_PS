@@ -23,22 +23,24 @@ for i in range(N):
 while queue:
     X, Y = queue.popleft()
 
-    # 탐색 불가 조건
-    # 1. 탐색하려는 위치가 범위를 벗어남
-    if X < 0 or X >= N or Y < 0 or Y >= M: continue
-    # 2. 탐색하려는 위치는 벽임
-    if Map[X][Y] == 'X': continue
-    # 3. 탐색하려는 위치는 이미 방문한 적 있음
-    if visited[X][Y]: continue
-
-    # 탐색
-    visited[X][Y] = True
-    if Map[X][Y] == 'P': result += 1
-
     # 다음 탐색
     for i in range(4):
         X_ = X + dx[i]
         Y_ = Y + dy[i]
+
+        # 탐색 불가 조건
+        # 1. 탐색하려는 위치가 범위를 벗어남
+        if X_ < 0 or X_ >= N or Y_ < 0 or Y_ >= M: continue
+        # 2. 탐색하려는 위치는 벽임
+        if Map[X_][Y_] == 'X': continue
+        # 3. 탐색하려는 위치는 이미 방문한 적 있음
+        if visited[X_][Y_]: continue
+
+        # 탐색
+        visited[X_][Y_] = True
+        if Map[X_][Y_] == 'P': result += 1
+
+        # 다음 queue 넣기
         queue.append((X_, Y_))
 
 # 출력부
