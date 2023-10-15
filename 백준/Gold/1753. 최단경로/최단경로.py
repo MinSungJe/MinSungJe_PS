@@ -29,8 +29,8 @@ while heap:
     for next, value in graph[current]:
         dist_ = dist + value
 
-        # 다음 탐색 불가 조건 : 다음 dist는 기록된 dist보다 거리가 김
-        if dist_ > result[next]: continue
+        # 다음 탐색 불가 조건 : 다음 dist는 기록된 dist보다 거리가 짧지 않음
+        if dist_ >= result[next]: continue
         
         # 탐색
         result[next] = dist_
