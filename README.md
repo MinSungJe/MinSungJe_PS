@@ -1,4 +1,5 @@
 # 🔍 MinSungJeAlgorithm
+[![Notion](https://img.shields.io/badge/Solving%20Description-000000?style=for-the-badge&logo=notion&logoColor=white)](https://minsungje.notion.site/1c515f77116d46b688b95c30997bcdfd?v=6bf2d97d56c045c8af35027cd7b9cfc9&pvs=4)
 >- Solving the algorithms of **MinSungJeStyle**
 >- This is a auto push repository for Baekjoon Online Judge created with [BaekjoonHub](https://github.com/BaekjoonHub/BaekjoonHub).
 ---
