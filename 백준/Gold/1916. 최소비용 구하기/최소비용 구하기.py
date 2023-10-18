@@ -10,7 +10,6 @@ M = int(input())
 INF = 100000001
 result = [0] + [INF for _ in range(N)]
 graph = [list() for _ in range(N+1)]
-queue = []
 
 # 그래프 입력
 for _ in range(M):
@@ -20,11 +19,7 @@ for _ in range(M):
 # 출발지점, 목표지점 기록
 start, end = map(int, input().split())
 result[start] = 0
-
-# heap 초기값 입력
-for w, v in graph[start]:
-    heapq.heappush(queue, (w, v))
-    result[v] = min(w, result[v])
+queue = [(0,start)]
 
 # 다익스트라
 while queue:
@@ -46,4 +41,4 @@ while queue:
         heapq.heappush(queue, (W_, node_))
 
 # 출력부
-print(result[end] if start != end else 0)
+print(result[end])
