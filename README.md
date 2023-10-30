@@ -9,7 +9,11 @@
 >- 📗 solved.ac [→ 바로가기](https://solved.ac/profile/minje813)
 ---
 ## 📜 Updates
-> **2023-10-10**
->- 현재 solved.ac Tier : Gold IV 971
+> 👑 **2023-10-29**
+>- Tier : Gold III 1105
+>- 197문제 해결
+>
+> 👑 **2023-10-10**
+>- Tier : Gold IV 971
 >- 백준허브 시작
 >- 180문제 (정답 : 179, 부분정답 : 1) 동기화 완료
