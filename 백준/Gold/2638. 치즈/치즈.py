@@ -1,50 +1,51 @@
-# 모듈 불러오기
-from collections import deque
+# 빠른 입력 및 재귀 한계 해제
+import sys
+def input(): return sys.stdin.readline().rstrip()
+sys.setrecursionlimit(10**6)
+
+# DFS 선언
+def DFS(X, Y):
+    global visited
+
+    # 4방향 탐색
+    for i in range(4):
+        X_ = X + dx[i]
+        Y_ = Y + dy[i]
+
+        # 탐색 불가 조건
+        # 1. 탐색하려는 구역이 범위를 벗어남
+        if X_ < 0 or X_ >= N or Y_ < 0 or Y_ >= M: continue
+        # 2. 탐색하려는 구역은 치즈임
+        if Map[X_][Y_] == 1:
+            visited[X_][Y_] += 1
+            continue
+        # 3. 탐색하려는 구역은 이미 탐색한 적 있음
+        if visited[X_][Y_]: continue
+
+        # 탐색
+        visited[X_][Y_] += 1
+
+        # 다음 탐색
+        DFS(X_, Y_)
 
 # 입력부
 N, M = map(int, input().split())
 Map = [list(map(int, input().split())) for _ in range(N)]
 
-# 초기값 설정
+# 초기값 선언
 visited = [[0 for _ in range(M)] for _ in range(N)]
+result = 0
 dx = (-1, 1, 0, 0)
 dy = (0, 0, -1, 1)
-result = 0
 
-# Map이 전부 0이 될때까지 반복
+# 치즈 녹이기
 while Map != visited:
-    # BFS
-    queue = deque([(0,0)])
-    while queue:
-        X, Y = queue.popleft()
-
-        # 탐색 불가 조건
-        # 1. 탐색하려는 구역이 Map을 벗어남
-        if X < 0 or X >= N or Y < 0 or Y >= M: continue
-        # 2. 탐색하려는 구간이 치즈인경우, visited 값을 추가하고 멈춤
-        if Map[X][Y] == 1:
-            visited[X][Y] += 1
-            continue
-        # 3. 탐색하려는 곳은 이미 탐색한 적 있는 구역임
-        if visited[X][Y]: continue
-
-        # 탐색
-        visited[X][Y] += 1
-
-        # 다음 탐색
-        for i in range(4):
-            X_ = X + dx[i]
-            Y_ = Y + dy[i]
-            queue.append((X_, Y_))
-
-    # 시간 추가 및 Map 수정
     result += 1
+    DFS(0,0)
     for i in range(N):
         for j in range(M):
-            if visited[i][j] >= 2: Map[i][j] = 0 # 녹아 없어진 치즈
-    
-    # visited 배열 초기화
+            if visited[i][j] >= 2: Map[i][j] = 0
     visited = [[0 for _ in range(M)] for _ in range(N)]
 
-# 출력부
+# 결과값 출력
 print(result)
