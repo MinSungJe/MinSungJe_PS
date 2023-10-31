@@ -3,45 +3,45 @@ import sys
 def input(): return sys.stdin.readline().rstrip()
 
 # 입력부
-R, C = map(int, input().split())
-Map = [list(input()) for _ in range(R)]
+N, M = map(int, input().split())
+Map = [list(input()) for _ in range(N)]
 
-# 초기값 설정
-visited = [[False for _ in range(C)] for _ in range(R)]
+# 초기값 선언
+visited = [False for _ in range(ord('Z')+1)] # 유니코드 활용 문자를 숫자로 변환
+result = 0
 dx = (-1, 1, 0, 0)
 dy = (0, 0, -1, 1)
-result = 0
 
-# DFS(재귀)
-def DFS(X, Y, count, record):
-    global result
+def DFS(X, Y, count):
+    global result, visited
 
-    # result 갱신
-    if count > result: result = count
+    # 결과값 최신화
+    result = max(result, count)
 
-    # 다음 탐색
+    # 4방향 탐색
     for i in range(4):
         X_ = X + dx[i]
         Y_ = Y + dy[i]
-        
+
         # 탐색 불가 조건
-        # 1. 탐색하려는 구역은 범위를 벗어남
-        if X_ < 0 or X_ >= R or Y_ < 0 or Y_ >= C: continue
-        # 2. 탐색하려는 구역은 알파벳 중복 지역임
-        if Map[X_][Y_] in record: continue
-        # 3. 탐색하려는 구역은 이미 방문한 곳임
-        if visited[X_][Y_]: continue
+        # 1. 탐색하려는 구역이 범위를 넘어섬
+        if X_ < 0 or X_ >= N or Y_ < 0 or Y_ >= M: continue
+        # 2. 탐색하려는 구역의 알파벳은 이미 거침
+        if visited[ord(Map[X_][Y_])]: continue
 
         # 탐색
-        visited[X_][Y_] = True
-        record.add(Map[X_][Y_])
+        visited[ord(Map[X_][Y_])] = True
 
-        DFS(X_, Y_, count+1, record)
+        # 다음 탐색
+        DFS(X_,Y_,count+1)
 
         # backtracking
-        visited[X_][Y_] = False
-        record.remove(Map[X_][Y_])
+        visited[ord(Map[X_][Y_])] = False
 
-# 실행 및 출력부
-DFS(0,0,1,set(Map[0][0]))
+
+# DFS 실행
+visited[ord(Map[0][0])] = True
+DFS(0,0,1)
+
+# 출력부
 print(result)
