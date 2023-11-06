@@ -24,7 +24,7 @@ def install(dist):
 
 # 이분탐색 알고리즘
 def BS():
-    l = 0
+    l = 1
     r = Map[-1] - Map[0] + 1
     result = 0
 
