@@ -9,8 +9,6 @@ def POW(a, b, c):
     # 분할 완료
     if b == 1:
         return a%c
-    if b == 2:
-        return (a*a) % c
     
     # 분할정복
     d = POW(a, b//2, c)
