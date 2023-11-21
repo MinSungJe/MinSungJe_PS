@@ -1,5 +1,6 @@
 # 빠른 입력 및 모듈 불러오기
 from collections import deque
+from itertools import combinations
 import sys
 def input(): return sys.stdin.readline().rstrip()
 
@@ -15,25 +16,8 @@ for i in range(N):
         if Map[i][j] == 1: house.append((i, j))
         if Map[i][j] == 2: chicken.append((i, j))
 
-# 현재 치킨집 중 M개의 치킨집 리스트를 뽑아내는 함수
-selected = [False for _ in range(len(chicken))]
-chickenGroup = []
-def selectChicken(node, lst):
-    global selected
-    temp = lst[:]
-
-    if len(lst) == M:
-        chickenGroup.append(lst)
-        return
-    
-    for i in range(node, len(chicken)):
-        lst.append(chicken[i])
-        selected[node] = True
-        selectChicken(i+1, lst) # 다음 탐색
-
-        # backtracking
-        lst = temp[:]
-        selected[node] = False
+# 현재 치킨집 중 M개의 치킨집 리스트를 뽑아냄 -> 라이브러리 이용
+chickenGroup = combinations(chicken, M)
 
 # 치킨 거리 구하는 함수
 def ckDist(x, y, chickens):
@@ -47,7 +31,6 @@ def ckDist(x, y, chickens):
 
 # 함수 호출
 result = 0
-selectChicken(0, [])
 for ck in chickenGroup:
     dist = 0
     for x, y in house:
