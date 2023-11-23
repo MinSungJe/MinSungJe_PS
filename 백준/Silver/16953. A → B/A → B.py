@@ -1,30 +1,23 @@
-# 모듈 불러오기
-from collections import deque
-
 # 입력부
 A, B = map(int, input().split())
 
-# 초기값 설정
+# 초기값 선언
+temp = B
+count = 1
 result = -1
 
-# queue 설정
-queue = deque([(A, 1)])
-
-# BFS
-while queue:
-    number, count = queue.popleft()
-
-    # 탐색 불가 조건 : 탐색하려는 위치는 B를 벗어남
-    if number > B: continue
-
-    # 탐색
-    if number == B:
+# B -> A로 이동
+while temp >= A:
+    if temp == A:
         result = count
         break
 
-    # 다음 탐색
-    queue.append((number*2, count+1))
-    queue.append(((10*number)+1, count+1))
+    if temp % 2 == 0: temp = temp//2 # 짝수인 경우 전 단계에서 2를 곱한 것
+    else:
+        if temp % 10 == 1: temp = temp // 10 # 1의 자리가 1이면 오른쪽에 1을 더한 것
+        else: break # 1의 자리가 1이 아닌 홀수는 불가능
+
+    count += 1
 
 # 출력부
 print(result)
