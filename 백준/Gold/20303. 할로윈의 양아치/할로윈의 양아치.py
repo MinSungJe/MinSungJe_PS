@@ -35,9 +35,9 @@ for i in range(1, N+1):
 # Knapsack (1차원 배열)
 DP = [0 for _ in range(K+1)]
 for i in range(1, N+1):
-    if P[i] != i: continue
     cry = bucket[i][0]
     value = bucket[i][1]
+    if not cry: continue
     for j in range(K, cry-1, -1): DP[j] = max(DP[j-cry]+value, DP[j])
 
 # 출력부
