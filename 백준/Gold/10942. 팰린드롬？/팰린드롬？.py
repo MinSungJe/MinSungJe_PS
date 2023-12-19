@@ -1,29 +1,26 @@
-# 빠른 입력 및 재귀 제한 해제
+# 빠른 입력
 import sys
-sys.setrecursionlimit(10**6)
 def input(): return sys.stdin.readline().rstrip()
-
-# 팰린드롬 확인 함수
-def palin(start, end):
-    # 탐색 완료
-    if start >= end: return 1
-    if DP[start][end] != -1: return DP[start][end] # 메모이제이션
-
-    if board[start] == board[end]:
-        DP[start][end] = 1 * palin(start+1, end-1)
-    else:
-        DP[start][end] = 0
-
-    return DP[start][end]
 
 # 입력부
 N = int(input())
 board = list(map(int, input().split()))
+
+# DP Table 생성 및 채우기
+DP = [[0 for _ in range(N)] for _ in range(N)]
+for gap in range(N):
+    for i in range(0, N-gap):
+        j = i + gap
+        # gap이 0이면 같은 숫자 -> 팰린드롬
+        if gap == 0: DP[i][j] = 1
+        # gap이 1 또는 2이면 같은지 확인 -> 같으면 팰린드롬
+        elif gap == 1 or gap == 2:
+            if board[i] == board[j]: DP[i][j] = 1
+        else: # gap이 3 이상이면 안쪽이 팰린드롬인지 확인 + 현재 값이 같은지 확인
+            if board[i] == board[j]: DP[i][j] = 1 * DP[i+1][j-1]
+
+# 출력부
 M = int(input())
-
-# 초기값 선언
-DP = [[-1 for _ in range(N)] for _ in range(N)]
-
 for _ in range(M):
     S, E = map(int, input().split())
-    print(1 if palin(S-1, E-1) else 0) # 함수 호출 및 출력부
+    print(DP[S-1][E-1])
