@@ -1,47 +1,34 @@
-# 빠른 입력 및 재귀 제한 해제
+# 빠른 입력
 import sys
-sys.setrecursionlimit(10**6)
 def input(): return sys.stdin.readline().rstrip()
 
 # 입력부
 N = int(input())
 Map = [list(map(int, input().split())) for _ in range(N)]
 
-# 초기값 설정
-result = 0
-DP = [[[0 for _ in range(3)] for _ in range(3)] for _ in range(N)]
+# 초기값 선언
+INF = 1000001
+result = INF
+DP = [[[INF for _ in range(3)] for _ in range(3)] for _ in range(N)]
+DP[0][0][0] = Map[0][0]
+DP[0][1][1] = Map[0][1]
+DP[0][2][2] = Map[0][2]
 
-# DFS(+DP)
-def DFS(node, house, start):
-    if node == N: return 0 # 탐색 종료
-    if DP[node][house][start]: return DP[node][house][start] # 메모이제이션
+# DP 배열 채우기
+for node in range(1, N):
+    for house in range(3):
+        for start in range(3):
+            if house == 0:
+                DP[node][house][start] = Map[node][house] + min(DP[node-1][1][start], DP[node-1][2][start])
+            if house == 1:
+                DP[node][house][start] = Map[node][house] + min(DP[node-1][0][start], DP[node-1][2][start])
+            if house == 2:
+                DP[node][house][start] = Map[node][house] + min(DP[node-1][0][start], DP[node-1][1][start])
 
-    # 탐색
-    cost = 0
-    if node != N-2: # 마지막 집이 아님
-        if house == 0:
-            cost = Map[node][house] + min(DFS(node+1, 1, start), DFS(node+1, 2, start))
-        if house == 1:
-            cost = Map[node][house] + min(DFS(node+1, 0, start), DFS(node+1, 2, start))
-        if house == 2:
-            cost = Map[node][house] + min(DFS(node+1, 0, start), DFS(node+1, 1, start))
-    else: # 마지막 집임
-        if house == 0:
-            if start == 0: cost = Map[node][house] + min(DFS(node+1, 1, start), DFS(node+1, 2, start))
-            if start == 1: cost = Map[node][house] + DFS(node+1, 2, start)
-            if start == 2: cost = Map[node][house] + DFS(node+1, 1, start)
-        if house == 1:
-            if start == 0: cost = Map[node][house] + DFS(node+1, 2, start)
-            if start == 1: cost = Map[node][house] + min(DFS(node+1, 0, start), DFS(node+1, 2, start))
-            if start == 2: cost = Map[node][house] + DFS(node+1, 0, start)
-        if house == 2:
-            if start == 0: cost = Map[node][house] + DFS(node+1, 1, start)
-            if start == 1: cost = Map[node][house] + DFS(node+1, 0, start)
-            if start == 2: cost = Map[node][house] + min(DFS(node+1, 0, start), DFS(node+1, 1, start))
-    
-    DP[node][house][start] = cost
-    return cost        
+            if node == N-1 and start == house:
+                DP[node][house][start] = INF
 
-# 함수 호출 및 출력부
-result = min(DFS(0,0,0), DFS(0,1,1), DFS(0,2,2))
+# 출력부
+for i in range(3):
+    result = min(result, min(DP[N-1][i]))
 print(result)
