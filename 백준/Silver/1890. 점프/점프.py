@@ -1,7 +1,6 @@
 # 빠른 입력 및 재귀 제한 해제
 import sys
 def input(): return sys.stdin.readline().rstrip()
-sys.setrecursionlimit(10**6)
 
 # 입력부
 N = int(input())
