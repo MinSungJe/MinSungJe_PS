@@ -4,21 +4,17 @@ def input(): return sys.stdin.readline().rstrip()
 
 # 입력부
 N, d, k, c = map(int, input().split())
-lane = list()
-for _ in range(N):
-    lane.append(int(input()))
+rotate = list(int(input()) for _ in range(N))
 
-# 모든 경우 확인
+# 결과값 도출
 result = 0
 for i in range(N):
-    line = [c]
-    for j in range(k):
-        idx = 0
-        if i+j >= N: idx = i+j-N
-        else: idx = i+j
-        line.append(lane[idx])
-    
-    result = max(result, len(set(line)))
+    # 슬라이싱을 이용해 먹는 회전초밥 개수 구하기
+    if i+k <= N:
+        sushi = len(set(rotate[i:i+k]+[c]))
+    else:
+        sushi = len(set(rotate[i:N]+rotate[0:(i+k-N)]+[c]))
+    result = max(result, sushi)
 
 # 출력부
 print(result)
