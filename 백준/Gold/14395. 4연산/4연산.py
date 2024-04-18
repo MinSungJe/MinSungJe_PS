@@ -7,7 +7,7 @@ s, t = map(int, input().split())
 # 초기값 선언
 result = -1
 operator = ['*', '+']
-queue = deque([(s*s, '*'), (s+s, '+'), (1, '/')])
+queue = deque([(s*s, '*'), (s+s, '+'), (0, '-'), (1, '/')])
 
 # BFS
 while queue:
