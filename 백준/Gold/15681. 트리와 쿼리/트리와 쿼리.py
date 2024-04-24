@@ -16,13 +16,11 @@ DP = [0 for _ in range(N+1)]
 
 # DFS(+DP)
 def DFS(node):
-    if DP[node]: return 0 # 이미 탐색을 한 상위트리임
-
     DP[node] = 1
     for node_ in graph[node]:
-        DP[node] += DFS(node_)
-    
-    return DP[node]
+        if DP[node_]: continue
+        DFS(node_)
+        DP[node] += DP[node_]
 
 # 함수 호출 및 출력부
 DFS(R) # DP값 채우기
