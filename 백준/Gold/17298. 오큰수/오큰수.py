@@ -11,8 +11,7 @@ result = [0 for _ in range(N)]
 
 # 결과값 채우기
 for i in range(N-1, -1, -1):
-    if not stack: result[i] = -1
-    else:
+    if stack:
         while stack:
             value = stack.pop()
             if A[i] < value:
@@ -20,7 +19,7 @@ for i in range(N-1, -1, -1):
                 stack.append(value)
                 break
         
-        if not stack: result[i] = -1
+    if not stack: result[i] = -1
     
     stack.append(A[i])
 
