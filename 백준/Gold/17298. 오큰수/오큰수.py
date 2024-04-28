@@ -7,21 +7,13 @@ A = list(map(int, input().split()))
 
 # 초기값 선언
 stack = deque()
-result = [0 for _ in range(N)]
+result = [-1 for _ in range(N)]
 
 # 결과값 채우기
-for i in range(N-1, -1, -1):
-    if stack:
-        while stack:
-            value = stack.pop()
-            if A[i] < value:
-                result[i] = value
-                stack.append(value)
-                break
-        
-    if not stack: result[i] = -1
-    
-    stack.append(A[i])
+for i in range(N):
+    while stack and A[stack[-1]] < A[i]: # 모노톤 스택
+        result[stack.pop()] = A[i]
+    stack.append(i)
 
 # 출력부
 print(*result)
