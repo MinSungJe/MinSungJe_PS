@@ -6,46 +6,41 @@ def input(): return sys.stdin.readline().rstrip()
 N, M = map(int, input().split())
 school = [0] + list(input().split())
 
-# 초기값 선언
-INF = 10000001
-
-# 그래프 그리기
-graph = [list() for _ in range(N+1)]
+# 간선 정보 넣기
+heap = []
 for _ in range(M):
     A, B, value = map(int, input().split())
-    if school[A] == school[B]: continue # 같은 종류의 대학교 간선 거르기
+    if school[A] == school[B]: continue # 같은 학교 간선 거르기
 
-    graph[A].append((value, B))
-    graph[B].append((value, A))
+    heapq.heappush(heap, (value, A, B))
 
-# 프림 알고리즘
-def Prim(start):
-    visited = [False for _ in range(N+1)]
-    visited[start] = True
-    result = 0
-    count = 1
-    heap = list()
+# union-find
+P = [i for i in range(N+1)]
 
-    # 처음 노드 넣기
-    for info in graph[start]: heapq.heappush(heap, info)
+def find(A):
+    if P[A] == A: return A
+    P[A] = find(P[A])
+    return P[A]
 
-    while heap:
-        value, node = heapq.heappop(heap)
+def union(A, B):
+    X, Y = find(A), find(B)
+    if X == Y: return
+    if X < Y: P[Y] = X
+    else: P[X] = Y
 
-        # 탐색 불가 조건
-        if visited[node]: continue
-        
-        # 탐색
-        visited[node] = True
-        result += value
-        count += 1
+# 크루스칼 알고리즘
+result = 0
+count = 0
+while heap:
+    value, A, B = heapq.heappop(heap)
+    
+    # 사이클 발생
+    if find(A) == find(B): continue
 
-        # 다음 탐색
-        for info in graph[node]: heapq.heappush(heap, info)
+    # 간선 추가
+    result += value
+    count += 1
+    union(A, B)
 
-    return result if count == N else INF
-
-# 함수 호출 및 출력부
-result = INF
-for start in range(1, N+1): result = min(result, Prim(start))
-print(result if result < INF else -1)
+# 출력부
+print(result if count == N-1 else -1)
