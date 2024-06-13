@@ -19,22 +19,22 @@ def DFS(node, count):
 
     # 탐색
     visited[node] = True
-    
+
     # 다음 탐색
     result = 1
     for node_ in graph[node]:
         result = max(result, 1+DFS(node_, count+1))
-
+    
     # 백트래킹
     visited[node] = False
     return result
 
 # 함수 호출 및 출력부
 result = 0
-visited = [False for _ in range(N)]
 for i in range(N):
-    depth = DFS(i, 1)
-    if depth >= 5:
+    visited = [False for _ in range(N+1)]
+    value = DFS(i, 1)
+    if value >= 5:
         result = 1
         break
 print(result)
