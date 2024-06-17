@@ -1,3 +1,7 @@
+# 재귀 제한 해제
+import sys
+sys.setrecursionlimit(10**6)
+
 # 입력부
 N = int(input())
 menu = list(map(int, input().split()))
@@ -9,8 +13,9 @@ INF = 1000000007
 def Pow(a, b):
     if b == 0: return 1
     if b == 1: return a
-    if b % 2: return Pow(a, b//2) * Pow(a, b//2) * a
-    else: return Pow(a, b//2) * Pow(a, b//2)
+    half = Pow(a, b//2)
+    if b % 2: return (half * half * a) % INF
+    else: return (half * half) % INF
 
 # 메뉴 정렬
 menu.sort()
