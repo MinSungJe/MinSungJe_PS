@@ -1,0 +1,6 @@
+N = int(input())
+A, B, C = map(int, input().split())
+A = min(A, N)
+B = min(B, N)
+C = min(C, N)
+print(A+B+C)
