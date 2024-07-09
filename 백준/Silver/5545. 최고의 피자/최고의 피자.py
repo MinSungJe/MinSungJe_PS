@@ -25,9 +25,9 @@ for i in range(N):
     price += B
     value = getResult(energy, price)
 
-    # 열량비가 더 커졌으면 더 좋은 피자임
-    if value >= result: result = value
-    else: break
+    # 열량비가 더 작아지면 나쁜 피자임
+    if value < result: break 
+    result = value
 
 # 출력부
 print(result)
