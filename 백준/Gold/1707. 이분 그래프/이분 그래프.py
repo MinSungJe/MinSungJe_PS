@@ -1,33 +1,24 @@
-# 모듈 불러오기 및 빠른 입력
-from collections import deque
+# 빠른 입력 및 재귀 제한 해제
 import sys
 def input(): return sys.stdin.readline().rstrip()
+sys.setrecursionlimit(10**6)
 
 # BFS 함수 선언
-def BFS(start_node):
-    # 초기값 선언\
-    queue = deque([(start_node, 0)])
-    result = True
+def DFS(node, Type):
+    # 탐색 불가 조건
+    if group[node] != -1:
+        if group[node] != Type: return False
+        return True
+    
+    # 탐색
+    group[node] = Type
 
-    # BFS
-    while queue:
-        node, Type = queue.popleft()
-
-        # 탐색 불가 조건
-        if group[node] != -1:
-            if group[node] != Type: # 이분그래프가 아님
-                return False
-            continue
-
-        # 탐색
-        group[node] = Type
-
-        # 다음 탐색
-        Type_ = 1 - Type
-        for node_ in graph[node]:
-            queue.append((node_, Type_))
-
-    return result
+    # 다음 탐색
+    Type_ = 1 - Type
+    for node_ in graph[node]:
+        if not DFS(node_, Type_): return False
+    
+    return True
 
 # TC
 K = int(input())
@@ -47,7 +38,7 @@ for test_case in range(1, K+1):
     result = True
     for node in range(1, V+1):
         if group[node] != -1: continue
-        if not BFS(node):
+        if not DFS(node, 0):
             result = False
             break
 
