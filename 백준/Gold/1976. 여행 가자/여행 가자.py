@@ -8,28 +8,32 @@ M = int(input())
 Map = [list(map(int, input().split())) for _ in range(N)]
 plan = list(map(int, input().split()))
 
-# 초기값 선언
-INF = 201
+# union-find
+P = [i for i in range(N+1)]
+def find(A):
+    if P[A] == A: return A
+    P[A] = find(P[A])
+    return P[A]
 
-# 연결되어있지 않은 부분 INF로 채우기
+def union(A, B):
+    X, Y = find(A), find(B)
+    if X == Y: return
+    if X < Y: P[Y] = X
+    else: P[X] = Y
+
+# 연결 정보 반영
 for i in range(N):
     for j in range(N):
-        if i != j and not Map[i][j]: Map[i][j] = INF
-
-# 플로이드-워셜 알고리즘
-for k in range(N):
-    for i in range(N):
-        for j in range(N):
-            Map[i][j] = min(Map[i][j], Map[i][k]+Map[k][j])
+        if Map[i][j]: union(i+1, j+1)
 
 # 여행 계획 확인
 result = 'YES'
 for i in range(M-1):
-    city = plan[i] - 1
-    city_ = plan[i+1] - 1
-    if Map[city][city_] != INF: continue
-    result = 'NO'
-    break
+    city = plan[i]
+    city_ = plan[i+1]
+    if find(city) != find(city_):
+        result = 'NO'
+        break
 
 # 출력부
 print(result)
