@@ -1,16 +1,5 @@
-# 이분 탐색
-def BS(target, note):
-    start = 0
-    end = len(note)
-    while start < end:
-        mid = (start + end) // 2
-
-        if note[mid] == target: return True
-
-        if note[mid] < target: start = mid+1
-        if note[mid] > target: end = mid
-
-    return False
+# 모듈 불러오기
+from collections import defaultdict
 
 # TC
 T = int(input())
@@ -21,8 +10,11 @@ for test_case in range(T):
     M = int(input())
     note2 = list(map(int, input().split()))
 
-    # note1 정렬
-    note1.sort()
+    # default dict 만들기
+    note_dict = defaultdict(int)
 
-    # note2의 값들이 note1에 있는지 이분탐색 / 출력부
-    for i in range(M): print(1 if BS(note2[i], note1) else 0)
+    # note1 입력
+    for i in range(N): note_dict[note1[i]] = 1
+
+    # note2 값 확인 및 출력부
+    for i in range(M): print(1 if note_dict[note2[i]] else 0)
