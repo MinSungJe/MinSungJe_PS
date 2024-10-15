@@ -9,6 +9,10 @@
 >- 📗 solved.ac [→ 바로가기](https://solved.ac/profile/minje813)
 ---
 ## 📜 Updates
+> 👑 **2024-10-15**
+>- Tier : Platinum IV 1751
+>- 594문제 해결
+>
 > 📅 **2024-10-13**
 >- Tier : Platinum V 1749
 >- 365일째 연속 문제 해결
