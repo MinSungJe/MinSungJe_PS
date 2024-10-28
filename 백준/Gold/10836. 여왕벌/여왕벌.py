@@ -5,26 +5,13 @@ def input(): return sys.stdin.readline().rstrip()
 # 입력부
 M, N = map(int, input().split())
 value = [1 for _ in range(2*M-1)]
-result = [[0 for _ in range(M)] for _ in range(M)]
 for _ in range(N):
-    value_array = list(map(int, input().split()))
-    plus_array = [0 for _ in range(value_array[0])] + [1 for _ in range(value_array[1])] + [2 for _ in range(value_array[2])]
-
-    for i in range(2*M-1):
-        value[i] += plus_array[i]
-
-# 배열 채우기
-idx = 0
-for x in range(M-1, -1, -1):
-    result[x][0] = value[idx]
-    idx += 1
-for y in range(1, M):
-    result[0][y] = value[idx]
-    idx += 1
-
-# 나머지 배열 채우기
-for x in range(1, M):
-    for y in range(1, M): result[x][y] = result[0][y]
+    # 0, 1, 2 값 더하기
+    zero, one, two = map(int, input().split())
+    for i in range(zero, zero+one): value[i] += 1
+    for i in range(zero+one, zero+one+two): value[i] += 2
 
 # 출력부
-for i in range(M): print(*result[i])
+print(' '.join(list(map(str, value[M-1:]))))
+for i in range(M-2, -1, -1):
+    print(f'{value[i]} ' + ' '.join(list(map(str, value[M:]))))
