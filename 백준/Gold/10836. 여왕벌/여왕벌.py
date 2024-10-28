@@ -4,35 +4,27 @@ def input(): return sys.stdin.readline().rstrip()
 
 # 입력부
 M, N = map(int, input().split())
-
-# 결과값 미리 그리기
-Map = [[1 for _ in range(M)] for _ in range(M)]
-
-# 추가할 값 구하는 함수
-def get_value(idx):
-    if value[0] - (idx+1) >= 0: return 0
-    if (value[0]+value[1]) - (idx+1) >= 0: return 1
-    return 2
-
-# 값 추가
+value = [1 for _ in range(2*M-1)]
+result = [[0 for _ in range(M)] for _ in range(M)]
 for _ in range(N):
-    value = list(map(int, input().split()))
-    idx = 0
-    while idx < (2*M-1):
-        idx_value = get_value(idx)
-        if idx < M-1:
-            x = (M-1)-idx
-            Map[x][0] += idx_value            
-        if idx >= M-1:
-            y = idx-(M-1)
-            Map[0][y] += idx_value
-        idx += 1
+    value_array = list(map(int, input().split()))
+    plus_array = [0 for _ in range(value_array[0])] + [1 for _ in range(value_array[1])] + [2 for _ in range(value_array[2])]
 
-# 배열을 돌며 최댓값 갱신
+    for i in range(2*M-1):
+        value[i] += plus_array[i]
+
+# 배열 채우기
+idx = 0
+for x in range(M-1, -1, -1):
+    result[x][0] = value[idx]
+    idx += 1
+for y in range(1, M):
+    result[0][y] = value[idx]
+    idx += 1
+
+# 나머지 배열 채우기
 for x in range(1, M):
-    for y in range(1, M):
-        min_value = min(x, y)
-        Map[x][y] = max(Map[0][y], Map[x][0], Map[x-min_value][y-min_value])
+    for y in range(1, M): result[x][y] = result[0][y]
 
 # 출력부
-for i in range(M): print(*Map[i])
+for i in range(M): print(*result[i])
