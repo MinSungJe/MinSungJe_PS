@@ -6,23 +6,29 @@ S = input()
 moeum = ['A', 'E', 'I', 'O', 'U']
 
 # 단어 확인
-result = 0
-for letter in S:
-    if result == 0:
-        if letter != 'A': continue
-        result += 1
-        continue
-
-    if result == 1:
-        if letter != 'A': continue
-        result += 1
-        continue
+result_letter = ''
+for i in range(M-3, N):
+    letter = S[i]
     
-    if result == 2:
-        if letter in moeum: continue
-        result += 1
+    # 단어가 이루어진 현황별 확인
+    if result_letter == '':
+        if letter != 'A': continue
+        result_letter += letter
         continue
 
-# 출력부
-print('YES' if result == 3 else 'NO')
-if result == 3: print('AAC')
+    if result_letter == 'A':
+        if letter != 'A': continue
+        result_letter += letter
+        continue
+
+    if result_letter == 'AA':
+        if letter in moeum: continue
+        result_letter += letter
+        continue        
+
+# 결과 계산 및 출력부
+result = len(result_letter) == 3
+print('YES' if result else 'NO')
+if result:
+    prefix = S[:M-3]
+    print(prefix+result_letter)
