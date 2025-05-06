@@ -1,5 +1,5 @@
 # 모듈 불러오기
-from collections import deque, defaultdict
+from collections import deque
 
 # 입력부
 N, K = map(int, input().split())
@@ -25,7 +25,8 @@ def check_is_asc(numbers):
 
 # 초기값 선언
 queue = deque([(numbers, 0)])
-visited = defaultdict(bool)
+visited = set()
+
 
 # BFS
 result = -1
@@ -33,13 +34,13 @@ while queue:
     node, count = queue.popleft()
 
     # 탐색 불가 조건
-    if visited[node]: continue
+    if node in visited: continue
 
     # 탐색
     if check_is_asc(node):
         result = count
         break
-    visited[node] = True
+    visited.add(node)
 
     # 다음 탐색
     for idx in range(0, N-K+1):
