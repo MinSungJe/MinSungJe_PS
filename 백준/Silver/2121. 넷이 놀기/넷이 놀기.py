@@ -10,18 +10,15 @@ points = [list(map(int, input().split())) for _ in range(N)]
 points.sort(key=lambda x: (x[0], x[1]))
 
 # 점 위치 기록
-pointPos = dict()
-for X, Y in points:
-    if pointPos.get(X) == None: pointPos[X] = {Y}
-    else: pointPos[X].add(Y)
+pointPos = set()
+for X, Y in points: pointPos.add((X, Y))
 
 # 점 마다 직사각형이 될 수 있는 지 확인
 result = 0
 for X, Y in points:
-    if pointPos.get(X+A) == None: continue
-    if Y+B not in pointPos[X]: continue
-    if Y not in pointPos[X+A]: continue
-    if Y+B not in pointPos[X+A]: continue
+    if (X, Y+B) not in pointPos: continue
+    if (X+A, Y) not in pointPos: continue
+    if (X+A, Y+B) not in pointPos: continue
     result += 1
 
 # 출력부
