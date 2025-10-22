@@ -26,7 +26,7 @@ def BFS(start, graph):
         if visited[node]: continue
 
         # 탐색
-        visited[node] = True
+        visited[node] = 1
 
         # 다음 탐색
         for node_ in graph[node]: queue.append(node_)
