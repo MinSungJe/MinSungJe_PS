@@ -1,4 +1,5 @@
-# 빠른 입력
+# 빠른 입력 및 모듈 불러오기
+from collections import deque
 import sys
 def input(): return sys.stdin.readline().rstrip()
 
@@ -12,24 +13,24 @@ for _ in range(m):
     graph[b].append(a)
 
 # 초기값 선언
-visited = [501 for _ in range(n+1)]
+answer = 0
+queue = deque([(1, 0)])
+visited = [False for _ in range(n+1)]
 
-# DFS
-def DFS(idx, count):
-    # 탐색 종료
-    if visited[idx] <= count: return
+# BFS
+while queue:
+    node, count = queue.popleft()
+
+    # 탐색 불가 조건
+    if count > 2: continue
+    if visited[node]: continue
 
     # 탐색
-    visited[idx] = count
+    if node != 1: answer += 1
+    visited[node] = True
 
     # 다음 탐색
-    for idx_ in graph[idx]: DFS(idx_, count+1)
+    for node_ in graph[node]: queue.append((node_, count+1))
 
-# 함수 호출
-DFS(1, 0)
-
-# 결과 도출 및 출력부
-answer = 0
-for i in range(2, n+1):
-    if visited[i] <= 2: answer += 1
+# 출력부
 print(answer)
