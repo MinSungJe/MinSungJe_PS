@@ -1,3 +1,7 @@
+# 빠른 입력
+import sys
+def input(): return sys.stdin.readline().rstrip()
+
 # TC
 N = int(input())
 
